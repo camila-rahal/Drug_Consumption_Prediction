@@ -1,0 +1,32 @@
+,,0,1
+age_category,18-24 years,113,524
+age_category,25-34 years,218,262
+age_category,35-44 years,215,140
+age_category,45-54 years,211,83
+age_category,55-64 years,70,23
+age_category,65+ years,13,5
+gender_category,Female,552,385
+gender_category,Male,288,652
+education_category,Doctorate degree,53,36
+education_category,Left school at 16 years,53,45
+education_category,Left school at 17 years,11,18
+education_category,Left school at 18 years,25,74
+education_category,Left school before 16 years,14,14
+education_category,Master’s degree,189,94
+education_category,Professional certificate/diploma,149,121
+education_category,Some college or university (no certificate),85,418
+education_category,University degree,261,217
+country_category,Australia,8,44
+country_category,Canada,32,55
+country_category,New Zealand,1,4
+country_category,Other,28,90
+country_category,Republic of Ireland,6,14
+country_category,UK,716,328
+country_category,USA,49,502
+ethnicity_category,Asian,17,8
+ethnicity_category,Black,25,8
+ethnicity_category,Mixed-Black/Asian,0,3
+ethnicity_category,Mixed-White/Asian,8,12
+ethnicity_category,Mixed-White/Black,7,12
+ethnicity_category,Other,19,43
+ethnicity_category,White,764,951
