@@ -1,3 +1,14 @@
+####
+####
+#### PLEASE READ DISCLAIMER BELOW:
+#### THIS CODE WAS NOT USED 
+#### This was the approach we first had to identify the true label of the demographic information, back then we didn't know we could 
+#### access through the metadata (as an output), so we design this code to assume the demographic labels according to the values. 
+#### This is part of our work, however, this code is not being used, is just here as evidence of our work process.
+####
+####
+####
+####
 import pandas as pd
 
 # Load the dataset

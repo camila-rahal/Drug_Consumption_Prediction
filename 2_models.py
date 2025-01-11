@@ -18,11 +18,13 @@ import seaborn as sns
 # Load your dataset
 df = pd.read_csv('balanced_dataset.csv')
 
+df = df.drop(columns=['country'])
+
 # Define your target variable
 target = 'Target'
 
 # Define the predictors explicitly
-predictors = ['age', 'gender', 'education', 'country', 'nscore', 'escore', 'oscore', 'ascore', 'cscore', 'impulsive', 'ss']
+predictors = ['age', 'gender', 'education', 'nscore', 'escore', 'oscore', 'ascore', 'cscore', 'impulsive', 'ss']
 
 # Split the data into features (X) and target (y)
 X = df[predictors]
@@ -33,17 +35,50 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 # First split: Separate 5% as the hold-out set
-X_temp, X_holdout, y_temp, y_holdout = train_test_split(X_scaled, y, test_size=0.05, random_state=42)
+X_temp, X_holdout, y_temp, y_holdout = train_test_split(X_scaled, y, test_size=0.05, random_state=47)
 
 # Second split: Split remaining 95% into train (80%), validation (10%), and test (10%)
-X_train, X_temp, y_train, y_temp = train_test_split(X_temp, y_temp, test_size=0.2, random_state=42)
-X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+X_train, X_temp, y_train, y_temp = train_test_split(X_temp, y_temp, test_size=0.2, random_state=47)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=47)
 
 # Output dataset sizes
 print(f"Train set size: {X_train.shape[0]}")
 print(f"Validation set size: {X_val.shape[0]}")
 print(f"Test set size: {X_test.shape[0]}")
 print(f"Hold-out set size: {X_holdout.shape[0]}")
+
+# Perform XGBoost cross-validation to evaluate the model
+dtrain = xgb.DMatrix(X_train, label=y_train)
+
+params = {
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "eta": 0.1,  # Learning rate
+    "max_depth": 10,  # Maximum depth of the tree
+    "subsample": 0.8,  # Row subsampling
+    "colsample_bytree": 0.8,  # Feature subsampling
+}
+
+cv_results = xgb.cv(
+    params=params,
+    dtrain=dtrain,
+    num_boost_round=50,  # Number of boosting rounds
+    nfold=5,  # Number of folds
+    metrics=["logloss", "auc"],  # Metrics to evaluate
+    seed=42,
+    stratified=True,
+    verbose_eval=True
+)
+
+# Extract cross-validation metrics
+mean_logloss = cv_results['test-logloss-mean'].iloc[-1]
+std_logloss = cv_results['test-logloss-std'].iloc[-1]
+mean_auc = cv_results['test-auc-mean'].iloc[-1]
+std_auc = cv_results['test-auc-std'].iloc[-1]
+
+print(f"\nXGBoost Cross-Validation Metrics:")
+print(f"Mean Logloss: {mean_logloss:.4f} ± {std_logloss:.4f}")
+print(f"Mean AUC: {mean_auc:.4f} ± {std_auc:.4f}")
 
 
 def evaluate_model(model, X_val, y_val, model_name):
@@ -161,6 +196,12 @@ excluded_features = [predictors[i] for i in range(len(coefficients)) if coeffici
 print(f"\nSelected Predictors: {selected_features}")
 print(f"Excluded Predictors: {excluded_features}")
 
+plt.barh(predictors, coefficients)
+plt.xlabel("Coefficient Value")
+plt.ylabel("Feature")
+plt.title("Feature Importance (Logistic Regression)")
+plt.show()
+
 # Evaluate Logistic Regression on validation set
 evaluate_model(log_reg_lasso, X_val, y_val, "Logistic Regression with Lasso")
 
@@ -170,10 +211,19 @@ rf = RandomForestClassifier(n_estimators=100, random_state=42)
 rf.fit(X_train, y_train)
 evaluate_model(rf, X_val, y_val, "Random Forest")
 
+feature_importance_rf = rf.feature_importances_
+plt.barh(predictors, feature_importance_rf)
+plt.xlabel("Feature Importance")
+plt.ylabel("Feature")
+plt.title("Feature Importance (Random Forest)")
+plt.show()
+
+
 # # 3. Baseline XGBoost
 xgb_baseline = xgb.XGBClassifier(eval_metric='logloss', random_state=42)
 xgb_baseline.fit(X_train, y_train)
 evaluate_model(xgb_baseline, X_val, y_val, "Baseline XGBoost")
+
 
 # 4. Hyperparameter Tuning for Random Forest
 param_grid_rf = {
@@ -189,13 +239,33 @@ grid_search_rf = GridSearchCV(estimator=RandomForestClassifier(random_state=42),
                               cv=5,
                               verbose=1,
                               n_jobs=-1)
-
 grid_search_rf.fit(X_train, y_train)
-print(f"Best Parameters for Random Forest: {grid_search_rf.best_params_}")
+
+# Print cross-validation results
+print("\nGridSearchCV Results for Random Forest:")
+for mean, std, params in zip(grid_search_rf.cv_results_['mean_test_score'],
+                              grid_search_rf.cv_results_['std_test_score'],
+                              grid_search_rf.cv_results_['params']):
+    print(f"Mean F1: {mean:.4f} (std: {std:.4f}) with params: {params}")
+
+# Output best parameters and cross-validation results
+print(f"\nBest Parameters for Random Forest: {grid_search_rf.best_params_}")
+print(f"Best Cross-Validation F1 Score for Random Forest: {grid_search_rf.best_score_:.4f}")
+
+# Assign the best model
 best_rf = grid_search_rf.best_estimator_
+
 
 # Evaluate the optimized Random Forest
 evaluate_model(best_rf, X_val, y_val, "Optimized Random Forest")
+
+feature_importance_best_rf = best_rf.feature_importances_
+plt.barh(predictors, feature_importance_best_rf)
+plt.xlabel("Feature Importance")
+plt.ylabel("Feature")
+plt.title("Feature Importance (Optimized Random Forest)")
+plt.show()
+
 
 # 5. Hyperparameter Tuning for XGBoost
 param_grid_xgb = {
@@ -204,6 +274,8 @@ param_grid_xgb = {
     "learning_rate": [0.01, 0.1, 0.2],
     "subsample": [0.8, 1.0],
     "colsample_bytree": [0.8, 1.0],
+    "reg_alpha": [0, 0.1, 0.5, 1, 5],
+    "reg_lambda": [1, 5, 10, 15, 20]
 }
 
 # # Convert X_train and y_train to NumPy arrays
@@ -232,7 +304,6 @@ for n_estimators in param_grid_xgb["n_estimators"]:
                     f1_scores = []
 
                     for train_index, test_index in skf.split(X_train_np, y_train_np):
-                        # Use NumPy arrays instead of Pandas Series
                         X_cv_train, X_cv_test = X_train_np[train_index], X_train_np[test_index]
                         y_cv_train, y_cv_test = y_train_np[train_index], y_train_np[test_index]
 
@@ -242,9 +313,13 @@ for n_estimators in param_grid_xgb["n_estimators"]:
 
                     mean_f1 = np.mean(f1_scores)
 
+                    # Print cross-validation results for each parameter combination
+                    print(f"Params: {params}, Mean F1 Score: {mean_f1:.4f}")
+
                     if mean_f1 > best_score:
                         best_score = mean_f1
                         best_params = params
+
 
 print(f"Best Parameters for XGBoost: {best_params}")
 best_xgb = xgb.XGBClassifier(**best_params, eval_metric='logloss', random_state=42)
@@ -260,20 +335,61 @@ best_xgb.fit(X_train, y_train)
 # Evaluate the optimized XGBoost
 evaluate_model(best_xgb, X_val, y_val, "Optimized XGBoost")
 
+xgb.plot_importance(xgb_baseline)
+plt.title("Feature Importance (Baseline XGBoost)")
+plt.show()
+
+xgb.plot_importance(best_xgb)
+plt.title("Feature Importance (Optimized XGBoost)")
+plt.show()
+
+feature_importance_xgb = best_xgb.feature_importances_
+plt.barh(predictors, feature_importance_xgb)
+plt.xlabel("Feature Importance")
+plt.ylabel("Feature")
+plt.title("Feature Importance (Optimized XGBoost)")
+plt.show()
+
 # 6. Evaluate SVM
 svm_model = SVC(kernel='rbf', probability=True, random_state=42)
 svm_model.fit(X_train, y_train)
 evaluate_model(svm_model, X_val, y_val, "SVM")
+
+svm_linear = SVC(kernel='linear', probability=True, random_state=42)
+svm_linear.fit(X_train, y_train)
+coefficients_svm = svm_linear.coef_[0]
+plt.barh(predictors, coefficients_svm)
+plt.xlabel("Coefficient Value")
+plt.ylabel("Feature")
+plt.title("Feature Importance (Linear SVM)")
+plt.show()
+
 
 # 7. Evaluate Decision Tree
 dt = DecisionTreeClassifier(max_depth=5, random_state=42)
 dt.fit(X_train, y_train)
 evaluate_model(dt, X_val, y_val, "Decision Tree")
 
+feature_importance_dt = dt.feature_importances_
+plt.barh(predictors, feature_importance_dt)
+plt.xlabel("Feature Importance")
+plt.ylabel("Feature")
+plt.title("Feature Importance (Decision Tree)")
+plt.show()
+
+
 # 8. Evaluate Bagging Classifier
 bagging_clf = BaggingClassifier(estimator=DecisionTreeClassifier(max_depth=5, random_state=42), n_estimators=50, random_state=42)
 bagging_clf.fit(X_train, y_train)
 evaluate_model(bagging_clf, X_val, y_val, "Bagging Classifier")
+
+feature_importance_bagging = np.mean([tree.feature_importances_ for tree in bagging_clf.estimators_], axis=0)
+plt.barh(predictors, feature_importance_bagging)
+plt.xlabel("Feature Importance")
+plt.ylabel("Feature")
+plt.title("Feature Importance (Bagging Classifier)")
+plt.show()
+
 
 # 9. Final Evaluation on Hold-Out Set
 models = {
@@ -382,9 +498,11 @@ validation_df["Dataset"] = "Validation"
 holdout_df["Dataset"] = "Hold-Out"
 combined_results = pd.concat([validation_df, holdout_df], ignore_index=True)
 
+
 # Save the combined results to an HTML file
 combined_html_table = combined_results.to_html(index=False, border=1, justify="center")
 with open("model_comparison_combined.html", "w") as f:
     f.write(combined_html_table)
+
 
 print("Comparison table saved as 'model_comparison_combined.html'")
