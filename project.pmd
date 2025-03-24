@@ -1,0 +1,22 @@
+import pandas as pd
+import numpy as np
+from ucimlrepo import fetch_ucirepo
+import matplotlib.pyplot as plt
+import seaborn as sns
+from imblearn.over_sampling import SMOTE
+from scipy.stats import zscore
+
+
+# fetch dataset
+drug_consumption_quantified = fetch_ucirepo(id=373)
+
+# data (as pandas dataframes)
+X = drug_consumption_quantified.data.features
+y = drug_consumption_quantified.data.targets
+
+# metadata
+print(drug_consumption_quantified.metadata)
+
+# variable information
+print(drug_consumption_quantified.variables)
+
