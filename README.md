@@ -3,15 +3,17 @@
 
 ## Instructions to run the py files:
 - 1. Is advised to create a virtual environment and install the modules:
-- - #pip install ucimlrepo
-- - #pip install pandas
-- - #pip install np
-- - #pip install matplotlib
-- - #pip install seaborn
-- - #pip install scikit-learn
-- - #pip install imbalanced-learn
-- - #pip install xgboost
-- - #pip install --upgrade xgboost scikit-learn
+- - #pip install ucimlrepo - v. 0.0.7
+- - #pip install pandas - v. 2.2.3
+- - #pip install numpy - v. 2.2.1
+- - #pip install matplotlib - v. 3.10.0
+- - #pip install seaborn - v. 0.13.2
+- - #pip install scikit-learn - v. 1.6.1
+- - #pip install imbalanced-learn - v. 0.13.0
+- - #pip install xgboost - v. 2.1.3
+- - #pip install Pweave - v. 0.30.3
+
+- - python version 3.12
 
 - 2. Run the first file '1_preprocessing.py' to generate file: 'balanced_dataset.csv'
 - 3. Use the 'balanced_dataset.csv' as source of data to run the file '2_models'

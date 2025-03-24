@@ -8,21 +8,6 @@ Original file is located at
 
 #**Loading the dataset from repository:**
 """
-# on the terminal: 
-
-# python3 -m venv venv
-# source venv/bin/activate
-
-#pip install ucimlrepo
-#pip install pandas
-#pip install np
-#pip install matplotlib
-#pip install seaborn
-#pip install scikit-learn
-#pip install imbalanced-learn
-#pip install xgboost
-#pip install --upgrade xgboost scikit-learn
-
 
 
 import pandas as pd
