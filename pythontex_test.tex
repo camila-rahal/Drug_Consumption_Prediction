@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{pythontex}
+
+
+\begin{pycode}[showoutput]
+import pandas as pd
+import numpy as np
+from ucimlrepo import fetch_ucirepo
+import matplotlib.pyplot as plt
+import seaborn as sns
+from imblearn.over_sampling import SMOTE
+from scipy.stats import zscore
+
+
+# fetch dataset
+drug_consumption_quantified = fetch_ucirepo(id=373)
+
+# data (as pandas dataframes)
+X = drug_consumption_quantified.data.features
+y = drug_consumption_quantified.data.targets
+    \end{pycode}
+    
+\begin{document}
+
+\section*{PythonTeX Demo}
+
+Square of 7 is \py{7**2}
+
+\begin{pycode}
+for i in range(3):
+    print(f"Hello from Python line {i+1}")
+\end{pycode}
+
+\end{document}
+
