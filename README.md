@@ -11,7 +11,7 @@
 - - #pip install scikit-learn - v. 1.6.1
 - - #pip install imbalanced-learn - v. 0.13.0
 - - #pip install xgboost - v. 2.1.3
-- - #pip install Pweave - v. 0.30.3
+
 
 - - python version 3.12
 
