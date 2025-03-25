@@ -1,5 +1,5 @@
 # Drug_Consumption_Prediction
- Using personality traits and demographics this repository try to predict the risk of drug consumption
+ Using personality traits and demographics this repository predicts the risk of drug consumption.
 
 ## Instructions to run the py files:
 - 1. Is advised to create a virtual environment and install the modules:

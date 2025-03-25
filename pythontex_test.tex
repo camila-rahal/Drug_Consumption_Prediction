@@ -1,10 +1,26 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
 \usepackage{pythontex}
+\usepackage[a4paper, margin=2cm]{geometry}
 
-\begin{pyconsole}[file=1_preprocessing.py, showoutput]
-\end{pyconsole}
+\begin{document}
+\begin{center}
+\section*{Predicting risk of drug consumption based on personality features, demographic variables and previous consumption.}
+\begin{pycode}
+print(f"Camila Batista Rahal and Elena Maestre Soteras")
+\end{pycode}
+\end{center}
 
-\begin{pycode}[showoutput]
+
+Square of 7 is \py{7**2}
+
+\subsection*{Abstract}
+\begin{pycode}
+print(f"Drug consumption and misuse remain significant public health concerns, shaped by an interaction of personality traits, demographic characteristics, and historical behavior. The study employs a variety of predictive models (logistic regression, lasso, random forest, and Xgboost) to analyze the relationships between this personality factors, demographic variables, and drug consumption patterns, aiming to identify significant predictors for the risk of future drug use. The participants were classified as 'consumer' or 'non-consumer.' XGBoost baseline achieve the best performance with a recall of 84.3%, followed by Random Forest with recall of 83%. Random Forest achieves the highest AUC (0.90), making it the most effective model for distinguishing between consumers and non-consumers classes. Bagging Classifier and Optimized Random Forest closely follow with an AUC of 0.89, indicating strong performance with balanced sensitivity and specificity. This research demonstrates the potential of data-driven methods for understanding and addressing drug use behaviors, while offering a foundation for future studies that integrate psychological and demographic data.")
+\end{pycode}
+
+\subsection*{Importing and using libraries}
+\begin{pycode}
 import pandas as pd
 import numpy as np
 from ucimlrepo import fetch_ucirepo
@@ -13,38 +29,15 @@ import seaborn as sns
 from imblearn.over_sampling import SMOTE
 from scipy.stats import zscore
 
-\documentclass{article}
-\usepackage{pythontex}
-
-\begin{document}
-
-\section*{PythonTeX Output Only}
-
-\begin{pyconsole}[file=1_preprocessing.py, showoutput]
-\end{pyconsole}
-
-\end{document}
-
-
-
-# fetch dataset
+# Fetch dataset
 drug_consumption_quantified = fetch_ucirepo(id=373)
 
-# data (as pandas dataframes)
+# Data (as pandas dataframes)
 X = drug_consumption_quantified.data.features
 y = drug_consumption_quantified.data.targets
-\end{pycode}
-    
-\begin{document}
 
-\section*{PythonTeX Demo}
-
-Square of 7 is \py{7**2}
-
-\begin{pycode}
-for i in range(3):
-    print(f"Hello from Python line {i+1}")
+# Show first 5 rows
+print(X.head())
 \end{pycode}
 
 \end{document}
-

@@ -158,3 +158,10 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+note.md
+
+# Ignore everything from pythontex_test except the final PDF
+pythontex_test.*
+!pythontex_test.pdf
+pythontex-files-pythontex_test/
+

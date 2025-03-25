@@ -1,0 +1,49 @@
+=>PYTHONTEX#py#default#default#0#code#####9#
+print(f"Camila Batista Rahal and Elena Maestre Soteras")
+=>PYTHONTEX#py#default#default#1#i#####15#
+7**2
+=>PYTHONTEX#py#default#default#2#code#####18#
+print(f"Drug consumption and misuse remain significant public health concerns, shaped by an interaction of personality traits, demographic characteristics, and historical behavior. The study employs a variety of predictive models (logistic regression, lasso, random forest, and Xgboost) to analyze the relationships between this personality factors, demographic variables, and drug consumption patterns, aiming to identify significant predictors for the risk of future drug use. The participants were classified as 'consumer' or 'non-consumer.' XGBoost baseline achieve the best performance with a recall of 84.3%, followed by Random Forest with recall of 83%. Random Forest achieves the highest AUC (0.90), making it the most effective model for distinguishing between consumers and non-consumers classes. Bagging Classifier and Optimized Random Forest closely follow with an AUC of 0.89, indicating strong performance with balanced sensitivity and specificity. This research demonstrates the potential of data-driven methods for understanding and addressing drug use behaviors, while offering a foundation for future studies that integrate psychological and demographic data.")
+=>PYTHONTEX#py#default#default#3#code#####23#
+import pandas as pd
+import numpy as np
+from ucimlrepo import fetch_ucirepo
+import matplotlib.pyplot as plt
+import seaborn as sns
+from imblearn.over_sampling import SMOTE
+from scipy.stats import zscore
+
+# Fetch dataset
+drug_consumption_quantified = fetch_ucirepo(id=373)
+
+# Data (as pandas dataframes)
+X = drug_consumption_quantified.data.features
+y = drug_consumption_quantified.data.targets
+
+# Show first 5 rows
+print(X.head())
+=>PYTHONTEX:SETTINGS#
+version=0.18
+outputdir=pythontex-files-pythontex_test
+workingdir=.
+workingdirset=false
+gobble=none
+rerun=default
+hashdependencies=default
+makestderr=false
+stderrfilename=full
+keeptemps=none
+pyfuture=default
+pyconfuture=none
+pygments=true
+pygglobal=:GLOBAL||
+fvextfile=-1
+pyconbanner=none
+pyconfilename=stdin
+depythontex=false
+pygfamily=py|python3|
+pygfamily=pycon|pycon|
+pygfamily=sympy|python3|
+pygfamily=sympycon|pycon|
+pygfamily=pylab|python3|
+pygfamily=pylabcon|pycon|
