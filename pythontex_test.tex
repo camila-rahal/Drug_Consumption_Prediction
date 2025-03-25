@@ -1,5 +1,4 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
 \usepackage{pythontex}
 \usepackage[a4paper, margin=2cm]{geometry}
 \usepackage{graphicx}
@@ -7,44 +6,17 @@
 
 
 \begin{document}
-
+\begin{center}
 \section*{Predicting risk of drug consumption based on personality features, demographic variables and previous consumption.}
 
 \begin{pycode}
 print(f"Camila Batista Rahal and Elena Maestre Soteras")
 \end{pycode}
+\end{center}
 
 \subsection*{Abstract}
 
 Drug consumption and misuse remain significant public health concerns, shaped by an interaction of personality traits, demographic characteristics, and historical behavior. The study employs a variety of predictive models (logistic regression, lasso, random forest, and Xgboost) to analyze the relationships between this personality factors, demographic variables, and drug consumption patterns, aiming to identify significant predictors for the risk of future drug use. The participants were classified as 'consumer' or 'non-consumer.' XGBoost baseline achieve the best performance with a recall of 84.3\%, followed by Random Forest with recall of 83\%. Random Forest achieves the highest AUC (0.90), making it the most effective model for distinguishing between consumers and non-consumers classes. Bagging Classifier and Optimized Random Forest closely follow with an AUC of 0.89, indicating strong performance with balanced sensitivity and specificity. This research demonstrates the potential of data-driven methods for understanding and addressing drug use behaviors, while offering a foundation for future studies that integrate psychological and demographic data.
-
-\begin{pycode}
-import pandas as pd
-import numpy as np
-from ucimlrepo import fetch_ucirepo
-import matplotlib.pyplot as plt
-import seaborn as sns
-from imblearn.over_sampling import SMOTE
-from scipy.stats import zscore
-
-# Fetch dataset
-drug_consumption_quantified = fetch_ucirepo(id=373)
-
-# Data (as pandas dataframes)
-X = drug_consumption_quantified.data.features
-y = drug_consumption_quantified.data.targets
-
-# Change the name of column impulsive
-X = X.copy()
-X.rename(columns={'impuslive': 'impulsive'}, inplace=True)
-
-
-# Reorder the classification of drug use from CL0 to CL6
-ordered_categories = ['CL0', 'CL1', 'CL2', 'CL3', 'CL4', 'CL5', 'CL6']
-for column in y.columns:
-    y.loc[:, column] = pd.Categorical(y[column], categories=ordered_categories, ordered=True)
-
-\end{pycode}
 
 \subsection*{Exploratory Data Analysis}
 
@@ -94,7 +66,7 @@ education_data = [
     ("Left school at 17 years", 11, 18),
     ("Left school at 18 years", 25, 74),
     ("Left school before 16 years", 14, 14),
-    ("Master’s degree", 189, 94),
+    ("Masters degree", 189, 94),
     ("Professional certificate/diploma", 149, 121),
     ("Some college or university (no certificate)", 85, 418),
     ("University degree", 261, 217)
