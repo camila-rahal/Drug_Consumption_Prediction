@@ -1,6 +1,6 @@
 =>PYTHONTEX#py#default#default#0#code#####12#
 print(f"Camila Batista Rahal and Elena Maestre Soteras")
-=>PYTHONTEX#py#default#default#1#code#####21#
+=>PYTHONTEX#py#default#default#1#code#####20#
 import pandas as pd
 import numpy as np
 from ucimlrepo import fetch_ucirepo
@@ -26,7 +26,7 @@ ordered_categories = ['CL0', 'CL1', 'CL2', 'CL3', 'CL4', 'CL5', 'CL6']
 for column in y.columns:
     y.loc[:, column] = pd.Categorical(y[column], categories=ordered_categories, ordered=True)
 
-=>PYTHONTEX#py#default#default#2#code#####62#
+=>PYTHONTEX#py#default#default#2#code#####59#
 print(r"\small")
 print(r"\begin{center}")
 print(r"\begin{tabular}{|l|r|r|} \hline")
@@ -104,7 +104,7 @@ for row in ethnicity_data:
 
 print(r"\end{tabular}")
 print(r"\end{center}")
-=>PYTHONTEX#py#default#default#3#code#####143#
+=>PYTHONTEX#py#default#default#3#code#####140#
 # Define summary data as a dictionary
 summary_data = {
     "Age":         [1877, 0.037, 0.878, -0.951, -0.951, -0.078, 0.497, 2.591],
@@ -116,54 +116,4 @@ summary_data = {
     "Escore":      [1877, -0.0019, 0.997, -3.273, -0.695, 0.003, 0.637, 3.273],
     "Oscore":      [1877, -0.0032, 0.995, -3.273, -0.717, -0.019, 0.723, 2.901],
     "Ascore":      [1877, "0.00065", 0.996, -3.464, -0.606, -0.017, 0.760, 3.464],
-    "Cscore":      [1877, "0.00039", 0.997, -3.464, -0.652, -0.006, 0.584, 3.464],
-    "Impulsive":   [1877, 0.0052, 0.954, -2.555, -0.711, -0.217, 0.529, 2.901],
-    "Ss":          [1877, -0.0074, 0.962, -2.078, -0.525, 0.079, 0.765, 1.921],
-    "Target":      [1877, 0.552, 0.497, 0, 0, 1, 1, 1]
-}
-
-columns = ["count", "mean", "std", "min", "25\\%", "50\\%", "75\\%", "max"]
-
-# Print LaTeX table using raw format
-print(r"\begin{table}[h!]")
-print(r"\centering")
-print(r"\small")
-print(r"\caption{Summary statistics of features and target variable}")
-print(r"\label{tab:summary_statistics}")
-print(r"\begin{tabular}{l" + "r" * len(columns) + "}")
-print(r"\toprule")
-print(" & ".join([""] + columns) + r" \\ \midrule")
-
-for feature, values in summary_data.items():
-    row = [feature] + [str(v) for v in values]
-    print(" & ".join(row) + r" \\")
-print(r"\bottomrule")
-print(r"\end{tabular}")
-print(r"\end{table}")
-=>PYTHONTEX#py#default#default#4#i#####181#
-7**2
-=>PYTHONTEX:SETTINGS#
-version=0.18
-outputdir=pythontex-files-pythontex_test
-workingdir=.
-workingdirset=false
-gobble=none
-rerun=default
-hashdependencies=default
-makestderr=false
-stderrfilename=full
-keeptemps=none
-pyfuture=default
-pyconfuture=none
-pygments=true
-pygglobal=:GLOBAL||
-fvextfile=-1
-pyconbanner=none
-pyconfilename=stdin
-depythontex=false
-pygfamily=py|python3|
-pygfamily=pycon|pycon|
-pygfamily=sympy|python3|
-pygfamily=sympycon|pycon|
-pygfamily=pylab|python3|
-pygfamily=pylabcon|pycon|
+    "Cscore":      [1877, "0.0

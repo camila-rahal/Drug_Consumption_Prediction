@@ -7,12 +7,12 @@
 
 
 \begin{document}
-\begin{center}
+
 \section*{Predicting risk of drug consumption based on personality features, demographic variables and previous consumption.}
+
 \begin{pycode}
 print(f"Camila Batista Rahal and Elena Maestre Soteras")
 \end{pycode}
-\end{center}
 
 \subsection*{Abstract}
 
@@ -175,8 +175,6 @@ print(r"\bottomrule")
 print(r"\end{tabular}")
 print(r"\end{table}")
 \end{pycode}
-    
-Square of 7 is \py{7**2}
 
 To analyze the correlation between features a correlation matrix was performed (Figure 2). It demonstrated that "Country" and "Age" show strong negative correlations with the target (-0.55 and -0.42), while "Sensation-Seeking" (ss) and "Impulsivity" have positive correlations (0.44 and 0.32), indicating their influence on user classification. Additionally, "nscore" and "escore" are moderately negatively correlated (-0.43), and "ss" and "Impulsive" are strongly positively correlated (0.62), suggesting feature interdependencies. This analysis hints the most important features it can be used as a predictor for the model.
 
@@ -184,30 +182,32 @@ To analyze the correlation between features a correlation matrix was performed (
     \centering
     \includegraphics[width=\textwidth]{correlation-matrixpng.png}
     \caption{Correlation matrix of features.}
-    \label{fig:violin_plot}
+    \label{fig:correlation-matrix}
 \end{figure}
 
 \subsection*{Data Preparation}
 
+1. Data used was preprocessed previously.
 
-1.	Data used was preprocessed previously.
-2.	5\% of the data was reserved as final evaluation set *Hold-Out, and the remaining data was split into 80\% training, 10\% validation, 10\% testing. Random seeds ensured reproducibility.
-3.	Target was binary (consumer vs non-consumer) and 11 features: the Big Five personality traits (NEO-FFI-R), those are nscore (Neutoticism), escore (Extraversion), oscore (Openness to Experience), ascore (Agreeableness), and cscore (Conscientiousness). Impulsivity (BIS-11), sensation seeking (ImpSS), and demographic information: age, gender, education, and country. 
-4.	Data was standardized.
+2. 5\% of the data was reserved as final evaluation set *Hold-Out, and the remaining data was split into 80\% training, 10\% validation, 10\% testing. Random seeds ensured reproducibility.
 
-\subsubsection*{Model development steps}
+3. Target was binary (consumer vs non-consumer) and 11 features: the Big Five personality traits (NEO-FFI-R), those are nscore (Neutoticism), escore (Extraversion), oscore (Openness to Experience), ascore (Agreeableness), and cscore (Conscientiousness). Impulsivity (BIS-11), sensation seeking (ImpSS), and demographic information: age, gender, education, and country.
+
+4. Data was standardized.
 
 \subsubsection*{Models implemented}
 
-The decision for choosing each model was based on the hability to solve classification problems. Those are the models applied to this project:
-1.	Logistic Regression with L1 regularization
-2.	Random Forest (baseline)
-3.	Random Forest (Optimized with hyperparameters)
-4.	XGBoost (baseline)
-5.	XGBoost (Optimized with hyperparameters)
-6.	SVM 
-7.	Decision Tree
-8.	Bagging Classifier
+\begin{itemize}
+    \item Logistic Regression with L1 regularization
+    \item Random Forest (baseline)
+    \item Random Forest (Optimized with hyperparameters)
+    \item XGBoost (baseline)
+    \item XGBoost (Optimized with hyperparameters)
+    \item SVM
+    \item Decision Tree
+    \item Bagging Classifier
+\end{itemize}
+
 
 \subsubsection*{Model evaluation metrics}
 
@@ -216,21 +216,23 @@ In this project, which focuses on predicting the risk of drug consumption based 
 
 \subsubsection*{Feature importance analysis}
 
-\textbf{Logistic Regression with L1 regularization:} "ss" has the highest positive coefficient, while "age" has a significant negative coefficient, indicating their contrasting roles in prediction. Here, Lasso excluded one predictor:  impulsiveness.
-
-\textbf{Linear SVM:} The feature "ss" is the most significant positive predictor, while "age" contributes negatively with moderate influence, followed by smaller coefficients for other features.
-
-\textbf{Bagging Classifier:} "Age" and "ss" are the most influential features, with "age" showing the strongest predictive importance.
-
-\textbf{Decision Tree:} "Age" dominates the predictive importance, followed by "ss" and other features with relatively smaller contributions.
-
-\textbf{Random Forest:} "ss" and "age" are the most influential features, with other features showing moderate importance.
-
-\textbf{Optimized XGBoost:} "Age" is the most significant feature, followed by "ss," with other features having a minor impact.
-
-\textbf{Optimized Random Forest:} Both "ss" and "age" contribute highly to prediction, with balanced importance among other features. 
-
-\textbf{Conclusion:} The features "ss" (sensation seeking) and "age" consistently emerge as the most important predictors across most models.
+\begin{itemize}
+    \item \textbf{Logistic Regression with L1 regularization:} "ss" has the highest positive coefficient, while "age" has a significant negative coefficient, indicating their contrasting roles in prediction. Lasso excluded impulsiveness.
+    
+    \item \textbf{Linear SVM:} "ss" is the most significant positive predictor, "age" contributes negatively, others are smaller.
+    
+    \item \textbf{Bagging Classifier:} "Age" and "ss" dominate, age is strongest.
+    
+    \item \textbf{Decision Tree:} "Age" is dominant, followed by "ss".
+    
+    \item \textbf{Random Forest:} Both "ss" and "age" are key predictors.
+    
+    \item \textbf{Optimized XGBoost:} "Age" is top, followed by "ss".
+    
+    \item \textbf{Optimized Random Forest:} "ss" and "age" show balanced importance.
+    
+    \item \textbf{Conclusion:} "ss" and "age" are most important across models.
+\end{itemize}
 
 \subsection*{Results}
 
@@ -239,9 +241,9 @@ In this project, which focuses on predicting the risk of drug consumption based 
 When focusing on recall, the Baseline XGBoost achieves the highest recall (84.3\%) followed by baseline Random Forest on the validation set, and the Bagging Classifier and Baseline XGBoost show the highest recall (80.7\%) on the hold-out set (Table 3). These results suggest that these models are particularly effective in identifying positive cases (consumers). The inconsistency of the results between the validation set and the hold-out, and the lower performance of the optimized models against the baseline models shows that there still space for improvement.
 
 \begin{pycode}
+print(r"\begin{table}[h!]")
+print(r"\centering")
 print(r"\small")
-print(r"\begin{center}")
-# Table 3: Model Performance using PythonTeX print() format
 print(r"\begin{tabular}{lcccccc} \toprule")
 print(r"Model & Accuracy & Precision & Recall & F1 Score & AUC & Dataset \\ \midrule")
 
@@ -269,8 +271,10 @@ for row in models:
 
 print(r"\bottomrule")
 print(r"\end{tabular}")
+print(r"\caption{Model performance across datasets}")
+print(r"\label{tab:model_performance}")  
+print(r"\end{table}") 
 \end{pycode}
-
 
 \subsubsection*{Cross-validation}
 The evaluation used Stratified K-Fold Cross-Validation (5 folds) for Logistic Regression and during manual hyperparameter tuning for XGBoost, while GridSearchCV with 5-fold cross-validation was employed for the optimized Random Forest and the optimized XGBoost. 
@@ -291,7 +295,29 @@ Mean AUC: 0.8762 ± 0.0139
 The result shows that XGBoost performs well, with accurate probability predictions (logloss: 0.4471) and strong class distinction (AUC: 0.8762), with consistent performance across folds (low standard deviations).
 
 
+\subsubsection*{ROC AUC}
 
+Random Forest achieved the highest AUC (0.90), followed by Bagging and Optimized Random Forest (0.89). Optimized XGBoost (0.88) outperformed its baseline (0.86). Logistic Regression and SVM showed solid results (0.86–0.87), while Decision Tree had the lowest AUC (0.85).
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figure_1.png}
+    \caption{ROC Curve comparison across supervised machine learning models.}
+    \label{fig:ROC}
+\end{figure}
+
+\subsection*{Discussion}
+
+Model performance consistency suggests strong data patterns and stable predictors. Sensation seeking (ss) and age consistently emerged as the top predictors across models. Logistic Regression and SVM highlighted ss positively and age negatively. Tree-based models also emphasized these features, with Optimized XGBoost and Random Forest showing strong generalization. Despite existing evidence, Lasso excluded impulsivity, possibly due to multicollinearity or weak individual effect.
+
+\subsubsection*{Implications}
+Results support using psychological and demographic data for early risk identification in public health strategies.
+
+\subsubsection*{Limitations}
+The dataset’s imbalance and youth-skewed sample may limit generalizability. Broader, more diverse data is needed in future research. Excluding variables may have overlooked interactions between legal and illegal substances. The static nature of the data also omits temporal trends that could inform targeted interventions. Future studies should include older, more diverse populations and explore dynamic usage patterns for improved insight and model performance.
+
+\subsection*{Conclusion}
+
+This study demonstrates that personality traits—especially sensation seeking—and age are key predictors of psychoactive drug use, with models like XGBoost and Random Forest achieving strong performance. Integrating psychological and demographic data into predictive models offers valuable tools for early identification and targeted public health interventions.
 
 \end{document}
