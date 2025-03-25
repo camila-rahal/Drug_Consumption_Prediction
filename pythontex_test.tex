@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{pythontex}
+\usepackage[utf8]{inputenc}
 \usepackage[a4paper, margin=2cm]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -30,10 +31,12 @@ The dataset had 1,885 participants, no missing data, and the features were quant
 \end{figure}
 
 \begin{pycode}
+print(r"\begin{table}[h!]")
+print(r"\centering")
 print(r"\small")
-print(r"\begin{center}")
+print(r"\caption{Demographic Summary}")
+print(r"\label{tab:demographics}")
 print(r"\begin{tabular}{|l|r|r|} \hline")
-print(r"\multicolumn{3}{|c|}{\textbf{Table 1: Demographic Summary}} \\ \hline")
 print(r"\textbf{Target} & \textbf{Non-consumer} & \textbf{Consumer} \\ \hline")
 
 # Age category
@@ -100,13 +103,14 @@ ethnicity_data = [
     ("White", 764, 951)
 ]
 for row in ethnicity_data:
-    print(f"{row[0]} & {row[1]} & {row[2]} \\\\ \hline")
+print(f"{row[0].replace('/', r'\\/')} & {row[1]} & {row[2]} \\\\ \hline")
 
 # Total
 #print(r"\textbf{Total} & \textbf{840} & \textbf{1037} \\ \hline")
 
 print(r"\end{tabular}")
-print(r"\end{center}")
+print(r"\end{table}")
+
 \end{pycode}
 
 
