@@ -1,6 +1,6 @@
 =>PYTHONTEX#py#default#default#0#code#####13#
 print(f"Camila Batista Rahal and Elena Maestre Soteras")
-=>PYTHONTEX#py#default#default#1#code#####142#
+=>PYTHONTEX#py#default#default#1#code#####143#
 print(r"\begin{table}[h!]")
 print(r"\centering")
 print(r"\small")
@@ -83,7 +83,7 @@ for row in ethnicity_data:
 print(r"\bottomrule")
 print(r"\end{tabular}")
 print(r"\end{table}")
-=>PYTHONTEX#py#default#default#2#code#####228#
+=>PYTHONTEX#py#default#default#2#code#####229#
 # Define summary data as a dictionary
 summary_data = {
     "Age":         [1877, 0.037, 0.878, -0.951, -0.951, -0.078, 0.497, 2.591],
@@ -119,7 +119,7 @@ for feature, values in summary_data.items():
 print(r"\bottomrule")
 print(r"\end{tabular}")
 print(r"\end{table}")
-=>PYTHONTEX#py#default#default#3#code#####266#
+=>PYTHONTEX#py#default#default#3#code#####267#
 print(r"\begin{table}[h!]")
 print(r"\centering")
 print(r"\small")

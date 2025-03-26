@@ -95,22 +95,23 @@ In this project, which focuses on predicting the risk of drug consumption based 
 When focusing on recall, the Baseline XGBoost achieves the highest recall (84.3\%) followed by baseline Random Forest on the validation set, and the Bagging Classifier and Baseline XGBoost show the highest recall (80.7\%) on the hold-out set (Table 3). These results suggest that these models are particularly effective in identifying positive cases (consumers). The inconsistency of the results between the validation set and the hold-out, and the lower performance of the optimized models against the baseline models shows that there still space for improvement.
 
 \subsubsection*{Cross-validation}
-The evaluation used Stratified K-Fold Cross-Validation (5 folds) for Logistic Regression and during manual hyperparameter tuning for XGBoost, while GridSearchCV with 5-fold cross-validation was employed for the optimized Random Forest and the optimized XGBoost. 
 
-Cross-Validation metrics for Logistic Regression with Lasso:
+The evaluation used Stratified K-Fold Cross-Validation (5 folds) for Logistic Regression and during manual hyperparameter tuning for XGBoost, while GridSearchCV with 5-fold cross-validation was employed for the optimized Random Forest and the optimized XGBoost. The result shows that XGBoost performs well, with accurate probability predictions (logloss: 0.4471) and strong class distinction (AUC: 0.8762), with consistent performance across folds (low standard deviations).
+
+\begin{itemize}
+    \item \textbf{Cross-Validation metrics for Logistic Regression with Lasso:}
 Mean Precision: 0.8128
 Mean Recall: 0.7877
 Mean F1 Score: 0.8000
 Mean ROC-AUC: 0.8670
 
-Cross-Validation metrics for Random Forest (Optimized):
+\item \textbf{Cross-Validation metrics for Random Forest (Optimized):}
 Best cross-validation F1 score: 0.8062
 
-Cross-Validation for XGBoost (Optimized):
+\item \textbf{Cross-Validation for XGBoost (Optimized):}
 Mean Logloss: 0.4471 ± 0.0276
 Mean AUC: 0.8762 ± 0.0139
-
-The result shows that XGBoost performs well, with accurate probability predictions (logloss: 0.4471) and strong class distinction (AUC: 0.8762), with consistent performance across folds (low standard deviations).
+\end{itemize}
 
 
 \subsubsection*{ROC AUC}
