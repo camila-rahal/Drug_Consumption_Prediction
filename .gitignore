@@ -162,6 +162,6 @@ note.md
 
 # Ignore everything from pythontex_test except the final PDF
 pythontex_test.*
-!pythontex_test.pdf
+!0_drug_consumption_predict.pdf
 pythontex-files-pythontex_test/
 
