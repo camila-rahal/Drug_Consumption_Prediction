@@ -37,6 +37,10 @@
 - - Decision Tree
 - - Bagging Classifier
 
+## Content of pdf file:
+
+- 0_drug_consumption_predict.pdf: This file contain the short report version.
+
 This is a group work designed by students from the Universität Luzern as a semester project for the course Supervised Machine Learning.
 
 Names: Camila Batista Rahal, Elena Maestre Soteras 
